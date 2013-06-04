@@ -2,13 +2,29 @@
   <head>
     <link rel="stylesheet" type="text/css" href="/demos/style.css">
     <style>
+      /* The following is the required CSS for list-view */
       .ember-list-view {
         overflow: auto;
         position: relative;
-        width: 100%;
       }
       .ember-list-item-view {
         position: absolute;
+      }
+      .scrolling .ember-list-item-view {
+        pointer-events: none;
+      }
+
+      /* Giving internal rows a full height and width causes
+         mousemove events to be triggered in webkit. The mousemove
+         events cancel the scroll inertia. This bug is worked
+         around by setting the scrolling class on list items.
+
+         Leaving this CSS here to ensure the workaround is tested.
+         */
+      .row {
+        background-color: red;
+        height: 50px;
+        width: 100px;
       }
     </style>
     <script src="/demos/vendor/jquery-1.9.0.js"></script>
@@ -22,7 +38,7 @@
     <script type="text/x-handlebars">
       {{#group}}
       {{#collection Ember.ListView contentBinding="controller" height=300 width=500 rowHeight=100 elementWidth=100}}
-        {{name}}
+        <div class="row">{{name}}</div>
       {{/collection}}
       {{/group}}
     </script>

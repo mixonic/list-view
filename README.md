@@ -143,6 +143,9 @@ App.ListView = Ember.ListView.extend({
 .ember-list-item-view {
   position: absolute;
 }
+.scrolling .ember-list-item-view {
+  pointer-events: none;
+}
 ```
 ## Build It
 

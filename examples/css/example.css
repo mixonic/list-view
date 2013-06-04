@@ -18,6 +18,10 @@ h2 {
   font-weight: 200;
 }
 
+.scrolling .ember-list-item-view {
+  pointer-events: none;
+}
+
 .examples-list {
   list-style-type: none;
   margin: 0;

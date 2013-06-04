@@ -54,6 +54,24 @@ function syncListContainerWidth(){
   }
 }
 
+function finishScrolling() {
+  var el = this.$();
+  if (el) { el.removeClass('scrolling'); }
+}
+
+function finishScrollingAfterInactivity(view) {
+  Ember.run.backburner.debounce(view, finishScrolling, 150);
+}
+
+function addClassWhenScrolling(){
+  this.$().addClass('scrolling');
+  finishScrollingAfterInactivity(this);
+}
+
+function startAddingClassWhenScrolling(){
+  this.on('scrollYChanged', this, addClassWhenScrolling);
+}
+
 function enableProfilingOutput() {
   function before(name, time, payload) {
     console.time(name);
@@ -105,7 +123,9 @@ Ember.ListViewMixin = Ember.Mixin.create({
     this._syncChildViews();
     this.columnCountDidChange();
     this.on('didInsertElement', syncListContainerWidth);
+    this.on('didInsertElement', this, startAddingClassWhenScrolling);
   },
+
 
   /**
     Called on your view when it should push strings of HTML into a
